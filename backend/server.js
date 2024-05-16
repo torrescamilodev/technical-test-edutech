@@ -1,14 +1,24 @@
-// server.js
 const http = require('http');
 const socketio = require('socket.io');
 const app = require('./app');
 
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+});
 
-io.on('connection', socket => {
-    socket.on('chatMessage', msg => {
+io.on('connection', (socket) => {
+    console.log('New WebSocket connection');
+
+    socket.on('chatMessage', (msg) => {
         io.emit('message', msg);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User has disconnected');
     });
 });
 

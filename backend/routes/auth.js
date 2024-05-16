@@ -9,11 +9,17 @@ const router = express.Router();
 router.post('/register', async (req, res) => {
     const { name, username, password, role } = req.body;
     try {
-        const user = new User({ name, username, password: bcrypt.hashSync(password, 10), role });
+        let user = await User.findOne({ username });
+        if (user) {
+            return res.status(400).json({ errors: [{ msg: 'Usuario ya registrado' }] });
+        }
+        
+        user = new User({ name, username, password: bcrypt.hashSync(password, 10), role });
         await user.save();
         const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1h' });
         res.json({ token });
     } catch (err) {
+        console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
