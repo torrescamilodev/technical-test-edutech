@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import axios from 'axios';
+import LogoutButton from './LogoutButton';
 
 const ENDPOINT = "http://localhost:5000";
 
-const Chat = () => {
+const Chat = ({ setAuth }) => {
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState('');
     const socket = socketIOClient(ENDPOINT, {
@@ -19,6 +20,10 @@ const Chat = () => {
                 });
                 setMessages(res.data);
             } catch (err) {
+                if (err.response && err.response.status === 401) {
+                    localStorage.removeItem('token');
+                    setAuth(false); // Redirigir al usuario a la pantalla de login
+                }
                 console.error(err);
             }
         };
@@ -32,7 +37,7 @@ const Chat = () => {
         return () => {
             socket.disconnect();
         };
-    }, [socket]);
+    }, [setAuth, socket]);
 
     const sendMessage = async () => {
         try {
@@ -42,24 +47,33 @@ const Chat = () => {
             socket.emit('chatMessage', res.data);
             setText('');
         } catch (err) {
+            if (err.response && err.response.status === 401) {
+                localStorage.removeItem('token');
+                setAuth(false); // Redirigir al usuario a la pantalla de login
+            }
             console.error(err);
         }
     };
 
     return (
-        <div>
-            <div>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/S5FlIUvYBqA" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+        <div className="container chat">
+            <div className="video-container">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             </div>
-            <div>
-                {messages.map((msg) => (
-                    <div key={msg._id}>
-                        <strong>{msg.user.name}</strong>: {msg.text}
-                    </div>
-                ))}
+            <div className="chat-container">
+                <LogoutButton setAuth={setAuth}/>
+                <div className="messages">
+                    {messages.map((msg) => (
+                        <div key={msg._id}>
+                            <strong>{msg.user?.name}</strong>: {msg.text}
+                        </div>
+                    ))}
+                </div>
+                <div className="input-container">
+                    <input value={text} onChange={(e) => setText(e.target.value)} />
+                    <button onClick={sendMessage}>Send</button>
+                </div>
             </div>
-            <input value={text} onChange={(e) => setText(e.target.value)} />
-            <button onClick={sendMessage}>Send</button>
         </div>
     );
 };

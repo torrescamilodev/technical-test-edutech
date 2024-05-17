@@ -4,11 +4,11 @@ import Login from './components/Login';
 import Register from './components/Register';
 
 const App = () => {
-    const [auth, setAuth] = useState(!!localStorage.getItem('token')); // Comprobar si hay un token almacenado
+    const [auth, setAuth] = useState(!!localStorage.getItem('token'));
 
     return (
         <div>
-            {auth ? <Chat /> : <Login setAuth={setAuth} />}
+            {auth ? <Chat setAuth={setAuth} /> : <Login setAuth={setAuth} />}
             {!auth && <Register setAuth={setAuth} />}
         </div>
     );
