@@ -15,7 +15,7 @@ router.post('/register', async (req, res) => {
         
         user = new User({ name, username, password: bcrypt.hashSync(password, 10), role });
         await user.save();
-        const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1m' });
+        const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '10m' });
         res.json({ token });
     } catch (err) {
         console.error(err.message);
@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
         if (!user || !bcrypt.compareSync(password, user.password)) {
             return res.status(400).send('Invalid Credentials');
         }
-        const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1m' });
+        const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '10m' });
         res.json({ token });
     } catch (err) {
         res.status(500).send('Server Error');

@@ -55,6 +55,13 @@ const Chat = ({ setAuth }) => {
         }
     };
 
+    const getDisplayName = (user) => {
+        if (user?.role === 'moderator') {
+            return <strong style={{ color: 'red' }}>{user.name} (mod)</strong>;
+        }
+        return <strong>{user?.name}</strong>;
+    };
+
     return (
         <div className="container chat">
             <div className="video-container">
@@ -65,7 +72,7 @@ const Chat = ({ setAuth }) => {
                 <div className="messages">
                     {messages.map((msg) => (
                         <div key={msg._id}>
-                            <strong>{msg.user?.name}</strong>: {msg.text}
+                            {getDisplayName(msg.user)}: {msg.text}
                         </div>
                     ))}
                 </div>
