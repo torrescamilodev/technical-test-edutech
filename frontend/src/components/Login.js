@@ -16,13 +16,13 @@ const Login = ({ setAuth }) => {
             setError(err.response.data.errors[0].msg || 'Error al iniciar sesión');
         }
     };
-
     return (
-        <div>
-            <input placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
-            <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-            <button onClick={login}>Login</button>
-            {error && <p>{error}</p>}
+        <div className="container-login-register">
+            <h3>Inicia Sesion</h3>
+            <input className='input-check' placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input className='input-check' type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <button className='input-check' onClick={login}>Login</button>
+            {error && <p className="error">{error}</p>}
         </div>
     );
 };

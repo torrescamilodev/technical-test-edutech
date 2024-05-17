@@ -20,6 +20,16 @@ body {
     overflow: hidden;
 }
 
+.container-login-register {
+    display: grid;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    justify-items: center
+}
+
 .video-container {
     width: 500px;
     flex: 2;
@@ -89,4 +99,29 @@ body {
 
 .input-container button:hover {
     background-color: #218838;
+}
+
+.input-check {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.error {
+    color: red;
+    margin-bottom: 10px;
 }

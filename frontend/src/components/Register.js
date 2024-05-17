@@ -20,16 +20,17 @@ const Register = ({ setAuth }) => {
     };
 
     return (
-        <div>
-            <input placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
-            <input placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
-            <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-            <select value={role} onChange={e => setRole(e.target.value)}>
+        <div className="container-login-register">
+            <h3>Registrate</h3>
+            <input className='input-check' placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+            <input className='input-check' placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input className='input-check' type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <select className='input-check' value={role} onChange={(e) => setRole(e.target.value)}>
                 <option value="student">Student</option>
                 <option value="moderator">Moderator</option>
             </select>
-            <button onClick={register}>Register</button>
-            {error && <p>{error}</p>}
+            <button className='input-check' onClick={register}>Register</button>
+            {error && <p className="error">{error}</p>}
         </div>
     );
 };
