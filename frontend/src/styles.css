@@ -27,7 +27,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 15px;
-    justify-items: center
+    justify-items: center;
 }
 
 .video-container {
@@ -124,4 +124,9 @@ button:hover {
 .error {
     color: red;
     margin-bottom: 10px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    text-align: center;
+    max-width: 100%;
+    overflow-wrap: break-word;
 }

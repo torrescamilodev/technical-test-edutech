@@ -9,13 +9,17 @@ const Register = ({ setAuth }) => {
     const [error, setError] = useState('');
 
     const register = async () => {
+        if (!name || !username || !password) {
+            setError('Por favor, llena todos los campos.');
+            return;
+        }
         try {
             const res = await axios.post('http://localhost:5000/api/auth/register', { name, username, password, role });
             localStorage.setItem('token', res.data.token);
             setAuth(true); // Establecer la autenticación y redirigir al chat
         } catch (err) {
             console.error(err);
-            setError(err.response.data.errors[0].msg || 'Error al registrar el usuario');
+            setError(err.response?.data?.msg || 'Error al registrar el usuario - Puede que el usuario ya exista');
         }
     };
 
